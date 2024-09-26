@@ -13,10 +13,11 @@ if (!$koneksi) {
 
 
 // NGAMBIL DATA TABEL DARI DATABASE 
-function getData($query)
+function getData($table)
 {
     global $koneksi;
 
+    $query = "SELECT * FROM $table";
     $result = mysqli_query($koneksi, $query);
     $rows = [];
     while ($row = mysqli_fetch_assoc($result)) {
@@ -61,16 +62,36 @@ function login($data)
 
 
 // INSERT DATA KE TABEL DATABASE
-function insertDataProduct($data)
+function insertData($data, $table)
 {
     global $koneksi;
 
-    $nama = $data["nama"];
-    $harga = $data["harga"];
-    $stok = $data["stok"];
-    $deskripsi = $data["deskripsi"];
+    if ($table == "produk") {
+        $namaProduk = $data["nama-produk"];
+        $harga = $data["harga-produk"];
+        $stok = $data["stok-produk"];
+        $deskripsiProduk = $data["deskripsi-produk"];
 
-    $query = "INSERT INTO produk VALUES(null, '$nama', '$harga', '$stok', '$deskripsi')";
+        $query = "INSERT INTO $table VALUES(null, '$namaProduk', '$harga', '$stok', '$deskripsiProduk')";
+    }
+
+    if ($table == "kategori") {
+        $nameKategori = $data["nama-kategori"];
+        $deskripsiKategori = $data["deskripsi-kategori"];
+        $image = $data["image-kategori"];
+
+        $query = "INSERT INTO $table VALUES(null, '$nameKategori', '$deskripsiKategori', '$image')";
+    }
+
+    if ($table == "pesanan") {
+        $namePesanan = $data["name-pesanan"];
+        $produk = $data["produk-pesanan"];
+        $jumlah = $data["jumlah-pesanan"];
+        $total = $data["total-pesanan"];
+
+        $query = "INSERT INTO $table VALUES(null, '$namePesanan', '$produk', '$jumlah', '$total')";
+    }
+
 
     mysqli_query($koneksi, $query);
 
@@ -83,7 +104,67 @@ function insertDataProduct($data)
     } else {
         echo "Data Gagal Dimasukan";
     }
+
+    // DELETE 
+
+    function delete($id, $table)
+    {
+        global $koneksi;
+        $query = "DELETE FROM $table WHERE id = $id";
+        mysqli_query($koneksi, $query);
+        return mysqli_affected_rows($koneksi);
+    }
 }
+
+
+function updateData($data, $id, $table)
+{
+    global $koneksi;
+
+    if ($table == "produk") {
+        $namaProduk = $data["nama-produk"];
+        $harga = $data["harga-produk"];
+        $stok = $data["stok-produk"];
+        $deskripsiProduk = $data["deskripsi-produk"];
+
+        $query = "UPDATE $table SET 
+        nama = '$namaProduk', 
+        harga = '$harga', 
+        stok = '$stok', 
+        deskripsi = '$deskripsiProduk' 
+        WHERE id = $id";
+    }
+
+    if ($table == "kategori") {
+        $namaKategori = $data["nama-kategori"];
+        $deskripsiKategori = $data["deskripsi-kategori"];
+        $image = $data["image-kategori"];
+
+        $query = "UPDATE $table SET
+         nama = '$namaKategori', 
+         deskripsi = '$deskripsiKategori', 
+         image = '$image' 
+         WHERE id = $id";
+    }
+
+    if ($table == "pesanan") {
+        $namePesanan = $data["name-pesanan"];
+        $produk = $data["produk-pesanan"];
+        $jumlah = $data["jumlah-pesanan"];
+        $total = $data["total-pesanan"];
+
+        $query = "UPDATE $table SET 
+        name = '$namePesanan', 
+        produk = '$produk', 
+        jumlah = '$jumlah', 
+        total = '$total' 
+        WHERE id = $id";
+    }
+
+    mysqli_query($koneksi, $query);
+}
+
+
 
 function register($data)
 {
@@ -93,12 +174,25 @@ function register($data)
     $password = $data["password"];
     $password2 = $data["password2"];
 
+    // CEK APAKAH USERNAME ADA
+    $query = "SELECT * FROM user WHERE username = '$username'";
+    $result = mysqli_query($koneksi, $query);
+
+    if (mysqli_fetch_assoc($result)) {
+        echo "
+        <script>
+        alert('Username Sudah Ada');
+       </script>";
+        return false;
+    }
+
+
 
     // CEK PASSWORD 1 DAN 2 APAKAH SAMA
     if ($password !== $password2) {
         echo " 
         <script>
-        alert('Gagal login')
+        alert('Konfirmasi Password salah')
        </script>";
         return false;
     } else {
@@ -113,74 +207,13 @@ function register($data)
     mysqli_query($koneksi, $query);
 }
 
-function addKategori($data)
+
+// UPDATE
+function showData($id, $table)
 {
     global $koneksi;
 
-    $nama = $data["nama"];
-    $deskripsi = $data["deskripsi"];
-    $image = $data["image"];
-
-    $query = "INSERT INTO kategori VALUES(null, '$nama', '$deskripsi', '$image')";
-
-    mysqli_query($koneksi, $query);
-
-    if (mysqli_affected_rows($koneksi) > 0) {
-        echo
-        "<script>
-        alert('Data Berhasil Dimasukan');
-        document.location.href = 'index.php'
-        </scrip>";
-    } else {
-        echo "Data Gagal Dimasukan";
-    }
-}
-
-function addPesanan($data)
-{
-    global $koneksi;
-
-    $name = $data["name"];
-    $produk = $data["produk"];
-    $jumlah = $data["jumlah"];
-    $total = $data["total"];
-
-    $query = "INSERT INTO pesanan VALUES(null, '$name', '$produk', '$jumlah', '$total')";
-    mysqli_query($koneksi, $query);
-}
-
-// DELETE PRODUCT
-
-function deleteProduct($id)
-{
-    global $koneksi;
-    $query = "DELETE FROM produk WHERE id = $id";
-    mysqli_query($koneksi, $query);
-    return mysqli_affected_rows($koneksi);
-}
-
-function deletekategori($id)
-{
-    global $koneksi;
-    $query = "DELETE FROM kategori WHERE id = $id";
-    mysqli_query($koneksi, $query);
-    return mysqli_affected_rows($koneksi);
-}
-
-function deletePesanan($id)
-{
-    global $koneksi;
-    $query = "DELETE FROM pesanan WHERE id = $id";
-    mysqli_query($koneksi, $query);
-    return mysqli_affected_rows($koneksi);
-}
-
-// UPDATE PRODUCT 
-function showProduct($id)
-{
-    global $koneksi;
-
-    $query = "SELECT * FROM produk WHERE id = $id";
+    $query = "SELECT * FROM $table WHERE id = $id";
     $result = mysqli_query($koneksi, $query);
     $rows = [];
     while ($row = mysqli_fetch_assoc($result)) {
@@ -190,74 +223,5 @@ function showProduct($id)
     return $rows;
 }
 
-function updateProduct($data, $id)
-{
-    global $koneksi;
-
-    $nama = $data["nama"];
-    $harga = $data["harga"];
-    $stok = $data["stok"];
-    $deskripsi = $data["deskripsi"];
-
-    $query = "UPDATE produk SET nama = '$nama', harga = '$harga', stok = '$stok', deskripsi = '$deskripsi' WHERE id = $id";
-
-    mysqli_query($koneksi, $query);
-    return mysqli_affected_rows($koneksi);
-}
-
-function showKategori($id)
-{
-    global $koneksi;
-
-    $query = "SELECT * FROM kategori WHERE id = $id";
-    $result = mysqli_query($koneksi, $query);
-    $rows = [];
-    while ($row = mysqli_fetch_assoc($result)) {
-        $rows[] = $row;
-    }
-    return $rows;
-}
-
-function showPesanan($id)
-{
-    global $koneksi;
-
-    $query = "SELECT * FROM pesanan WHERE id = $id";
-    $result = mysqli_query($koneksi, $query);
-
-    $rows = [];
-    while ($row = mysqli_fetch_assoc($result)) {
-        $rows[] = $row;
-    }
-    return $rows;
-}
 
 
-function updateKategori($data, $id)
-{
-    global $koneksi;
-
-    $nama = $data["nama"];
-    $deskripsi = $data["deskripsi"];
-    $image = $data["image"];
-
-    $query = "UPDATE kategori SET nama = '$nama', deskripsi = '$deskripsi', image = '$image' WHERE id = $id";
-
-    mysqli_query($koneksi, $query);
-    return mysqli_affected_rows($koneksi);
-}
-
-function updatePesanan($data, $id)
-{
-    global $koneksi;
-
-    $nama = $data["name"];
-    $produk = $data["produk"];
-    $jumlah = $data["jumlah"];
-    $total = $data["total"];
-
-    $query = "UPDATE pesanan SET name = '$nama', produk = '$produk', jumlah = '$jumlah', total = '$total' WHERE id = $id";
-
-    mysqli_query($koneksi, $query);
-    return mysqli_affected_rows($koneksi);
-}

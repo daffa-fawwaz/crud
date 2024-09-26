@@ -4,22 +4,19 @@ require 'function.php';
 
 
 $id = $_GET["id"];
-$kategori = showKategori($id);
+$kategori = showData($id, "kategori");
 
 if (isset($_POST["submit"])) {
-    if (updateKategori($_POST, $id) > 0) {
-        echo "<script>
-        alert('Produk Berhasil Diupdate');
-        document.location.href = 'index.php';
+    updateData($_POST, $id, "kategori");
+    if (mysqli_affected_rows($koneksi) > 0) {
+        echo
+        "<script>
+        alert('Data Berhasil Dimasukan');
+        document.location.href = 'index.php'
         </script>";
     } else {
-        echo "<script>
-    alert('Produk Gagal Diupdate');
-    document.location.href = 'index.php';
-    </script>";
+        echo "Data Gagal Dimasukan";
     }
-
-    // var_dump($_POST);
 }
 
 ?>
@@ -44,17 +41,17 @@ if (isset($_POST["submit"])) {
 
         <div class="flex flex-col">
             <label for="nama" class="mb-2 font-medium text-gray-700">Nama</label>
-            <input type="text" name="nama" id="nama" value="<?= $kategori[0]["nama"] ?>" class="border border-gray-300 p-2 rounded-lg">
+            <input type="text" name="nama-kategori" id="nama" value="<?= $kategori[0]["nama"] ?>" class="border border-gray-300 p-2 rounded-lg">
         </div>
 
         <div class="flex flex-col">
             <label for="deskripsi" class="mb-2 font-medium text-gray-700">Deskripsi</label>
-            <input type="text" name="deskripsi" id="deskripsi" value="<?= $kategori[0]["deskripsi"] ?>" class="border border-gray-300 p-2 rounded-lg">
+            <input type="text" name="deskripsi-kategori" id="deskripsi" value="<?= $kategori[0]["deskripsi"] ?>" class="border border-gray-300 p-2 rounded-lg">
         </div>
 
         <div class="flex flex-col">
             <label for="image" class="mb-2 font-medium text-gray-700">Image URL</label>
-            <input type="text" name="image" id="image" value="<?= $kategori[0]["image"] ?>" class="border border-gray-300 p-2 rounded-lg">
+            <input type="text" name="image-kategori" id="image" value="<?= $kategori[0]["image"] ?>" class="border border-gray-300 p-2 rounded-lg">
         </div>
 
         <button type="submit" name="submit" class="w-full py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50">Update Product</button>

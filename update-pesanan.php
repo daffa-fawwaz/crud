@@ -3,23 +3,19 @@
 require 'function.php';
 
 $id = $_GET["id"];
-$pesanan = showpesanan($id);
-var_dump($pesanan);
+$pesanan = showData($id, "pesanan");
+// var_dump($pesanan);
 
 if (isset($_POST["submit"])) {
-
-    updatePesanan($_POST, $id);
+    updateData($_POST, $id, "pesanan");
     if (mysqli_affected_rows($koneksi) > 0) {
-
-        echo "<script>
-        alert('Pesanan Berhasil Diubah');
-        document.location.href = 'index.php';
+        echo
+        "<script>
+        alert('Data Berhasil Dimasukan');
+        document.location.href = 'index.php'
         </script>";
     } else {
-        echo "<script>
-    alert('Pesanan Gagal Diubah');
-    document.location.href = 'index.php';
-    </script>";
+        echo "Data Gagal Dimasukan";
     }
 }
 
@@ -45,22 +41,22 @@ if (isset($_POST["submit"])) {
 
         <div class="flex flex-col">
             <label for="name" class="mb-2 font-medium text-gray-700">Nama</label>
-            <input type="text" name="name" id="name" value="<?= $pesanan[0]["name"] ?>" class="border border-gray-300 p-2 rounded-lg">
+            <input type="text" name="name-pesanan" id="name" value="<?= $pesanan[0]["name"] ?>" class="border border-gray-300 p-2 rounded-lg">
         </div>
 
         <div class="flex flex-col">
             <label for="produk" class="mb-2 font-medium text-gray-700">Produk</label>
-            <input type="text" name="produk" id="produk" value="<?= $pesanan[0]["produk"] ?>" class="border border-gray-300 p-2 rounded-lg">
+            <input type="text" name="produk-pesanan" id="produk" value="<?= $pesanan[0]["produk"] ?>" class="border border-gray-300 p-2 rounded-lg">
         </div>
 
         <div class="flex flex-col">
             <label for="jumlah" class="mb-2 font-medium text-gray-700">Jumlah</label>
-            <input type="text" name="jumlah" id="jumlah" value="<?= $pesanan[0]["jumlah"] ?>" class="border border-gray-300 p-2 rounded-lg">
+            <input type="text" name="jumlah-pesanan" id="jumlah" value="<?= $pesanan[0]["jumlah"] ?>" class="border border-gray-300 p-2 rounded-lg">
         </div>
 
         <div class="flex flex-col">
             <label for="total" class="mb-2 font-medium text-gray-700">Total</label>
-            <input type="text" name="total" id="total" value="<?= $pesanan[0]["total"] ?>" class="border border-gray-300 p-2 rounded-lg">
+            <input type="text" name="total-pesanan" id="total" value="<?= $pesanan[0]["total"] ?>" class="border border-gray-300 p-2 rounded-lg">
         </div>
 
         <button type="submit" name="submit" class="w-full py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50">Update Pesanan</button>

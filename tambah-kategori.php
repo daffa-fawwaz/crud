@@ -3,7 +3,7 @@
 require 'function.php';
 
 if (isset($_POST["submit"])) {
-    addKategori($_POST);
+    insertData($_POST, "kategori");
 
     // var_dump($_POST);
 }
@@ -30,17 +30,17 @@ if (isset($_POST["submit"])) {
 
         <div class="flex flex-col">
             <label for="nama" class="mb-2 font-medium text-gray-700">Nama</label>
-            <input type="text" name="nama" id="nama" class="border border-gray-300 p-2 rounded-lg">
+            <input type="text" name="nama-kategori" id="nama" class="border border-gray-300 p-2 rounded-lg">
         </div>
 
         <div class="flex flex-col">
             <label for="deskripsi" class="mb-2 font-medium text-gray-700">Deskripsi</label>
-            <input type="text" name="deskripsi" id="deskripsi" class="border border-gray-300 p-2 rounded-lg">
+            <input type="text" name="deskripsi-kategori" id="deskripsi" class="border border-gray-300 p-2 rounded-lg">
         </div>
 
         <div class="flex flex-col">
             <label for="image" class="mb-2 font-medium text-gray-700">Image URL</label>
-            <input type="text" name="image" id="image" class="border border-gray-300 p-2 rounded-lg">
+            <input type="text" name="image-kategori" id="image" class="border border-gray-300 p-2 rounded-lg">
         </div>
 
         <button type="submit" name="submit" class="w-full py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50">Masukan Product</button>

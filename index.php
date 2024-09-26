@@ -6,9 +6,9 @@ require 'function.php';
 $i = 1;
 $x = 1;
 
-$products = getData("SELECT * FROM produk");
-$kategoris = getData("SELECT * FROM kategori");
-$pesanans = getData("SELECT * FROM pesanan")
+$products = getData("produk");
+$kategoris = getData("kategori");
+$pesanans = getData("pesanan")
 
 // var_dump($products);
 
@@ -52,7 +52,7 @@ $pesanans = getData("SELECT * FROM pesanan")
                             <td class="border-b border-gray-300 p-4"><?= $product["deskripsi"] ?></td>
                             <td class="border-b border-gray-300 p-4 text-center">
                                 <a href="update-product.php?id=<?= $product["id"] ?>" class="text-blue-600 hover:underline">Ubah</a> |
-                                <a href="hapus-product.php?id=<?= $product["id"] ?>" class="text-red-600 hover:underline">Hapus</a>
+                                <a href="hapus.php?id=<?= $product["id"] ?>" class="text-red-600 hover:underline">Hapus</a>
                             </td>
                         </tr>
                         <?php $i++ ?>
@@ -82,7 +82,7 @@ $pesanans = getData("SELECT * FROM pesanan")
                         <p class="mb-3 text-gray-700"><?= htmlspecialchars($kategori["deskripsi"]) ?></p>
                         <div class="text-gray-700 font-semibold">
                             <a href="update-kategori.php?id=<?= $kategori["id"] ?>" class="text-blue-600 hover:underline">Ubah</a> |
-                            <a href="hapus-kategori.php?id=<?= $kategori["id"] ?>" class="text-red-600 hover:underline">Hapus</a>
+                            <a href="hapus.php?id=<?= $kategori["id"] ?>" class="text-red-600 hover:underline">Hapus</a>
                         </div>
                     </div>
                 </div>
@@ -117,7 +117,7 @@ $pesanans = getData("SELECT * FROM pesanan")
                             <td class="border-b border-gray-300 p-4"><?= $pesanan["total"] ?></td>
                             <td class="border-b border-gray-300 p-4 text-center">
                                 <a href="update-pesanan.php?id=<?= $pesanan["id"] ?>" class="text-blue-600 hover:underline">Ubah</a> |
-                                <a href="hapus-pesanan.php?id=<?= $pesanan["id"] ?>" class="text-red-600 hover:underline" onclick="return confirm('Yakin Ingin Menghapus')">Hapus</a>
+                                <a href="hapus.php?id=<?= $pesanan["id"] ?>" class="text-red-600 hover:underline" onclick="return confirm('Yakin Ingin Menghapus')">Hapus</a>
                             </td>
                         </tr>
                         <?php $x++ ?>

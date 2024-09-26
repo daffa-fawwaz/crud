@@ -3,7 +3,7 @@
 require 'function.php';
 
 if (isset($_POST["submit"])) {
-    insertDataProduct($_POST);
+    insertData($_POST, "produk");
 
     // var_dump($_POST);
 }
@@ -29,22 +29,22 @@ if (isset($_POST["submit"])) {
 
         <div class="flex flex-col">
             <label for="nama" class="mb-2 font-medium text-gray-700">Nama</label>
-            <input type="text" name="nama" id="nama" class="border border-gray-300 p-2 rounded-lg">
+            <input type="text" name="nama-produk" id="nama" class="border border-gray-300 p-2 rounded-lg">
         </div>
 
         <div class="flex flex-col">
             <label for="harga" class="mb-2 font-medium text-gray-700">Harga</label>
-            <input type="text" name="harga" id="harga" class="border border-gray-300 p-2 rounded-lg">
+            <input type="text" name="harga-produk" id="harga" class="border border-gray-300 p-2 rounded-lg">
         </div>
 
         <div class="flex flex-col">
             <label for="stok" class="mb-2 font-medium text-gray-700">Stok</label>
-            <input type="text" name="stok" id="stok" class="border border-gray-300 p-2 rounded-lg">
+            <input type="text" name="stok-produk" id="stok" class="border border-gray-300 p-2 rounded-lg">
         </div>
 
         <div class="flex flex-col">
             <label for="deskripsi" class="mb-2 font-medium text-gray-700">Deskripsi</label>
-            <input type="text" name="deskripsi" id="deskripsi" class="border border-gray-300 p-2 rounded-lg">
+            <input type="text" name="deskripsi-produk" id="deskripsi" class="border border-gray-300 p-2 rounded-lg">
         </div>
 
         <button type="submit" name="submit" class="w-full py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50">Masukan Product</button>
